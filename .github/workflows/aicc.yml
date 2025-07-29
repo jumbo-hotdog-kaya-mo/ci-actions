@@ -1,0 +1,26 @@
+name: Rust
+
+on: workflow_dispatch
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        BUILD_TARGET: [dev, release]
+    outputs:
+      release_built: ${{ steps.set-output.outputs.release_built }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        repository: jumbo-hotdog-kaya-mo/aicc
+        token: ${{ secrets.REPO_TOKEN }}
+    - name: Build "${{ matrix.BUILD_TARGET }}"
+      run: cargo build --profile ${{ matrix.BUILD_TARGET }}
+    - name: Test "${{ matrix.BUILD_TARGET }}"
+      run: cargo test --profile ${{ matrix.BUILD_TARGET }}
