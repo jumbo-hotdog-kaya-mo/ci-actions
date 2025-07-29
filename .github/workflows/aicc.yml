@@ -7,20 +7,18 @@ env:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        BUILD_TARGET: [dev, release]
-    outputs:
-      release_built: ${{ steps.set-output.outputs.release_built }}
+        profile: [dev, release]
+        os: [ubuntu-latest, windows-latest]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
       with:
         repository: jumbo-hotdog-kaya-mo/aicc
         token: ${{ secrets.REPO_TOKEN }}
-    - name: Build "${{ matrix.BUILD_TARGET }}"
-      run: cargo build --profile ${{ matrix.BUILD_TARGET }}
-    - name: Test "${{ matrix.BUILD_TARGET }}"
-      run: cargo test --profile ${{ matrix.BUILD_TARGET }}
+    - name: Build "${{ matrix.profile }}"
+      run: cargo build --profile ${{ matrix.profile }}
+    - name: Test "${{ matrix.profile }}"
+      run: cargo test --profile ${{ matrix.profile }}
