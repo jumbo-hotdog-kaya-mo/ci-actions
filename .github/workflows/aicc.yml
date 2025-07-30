@@ -1,4 +1,4 @@
-name: Rust
+name: aicc
 
 on: workflow_dispatch
 
