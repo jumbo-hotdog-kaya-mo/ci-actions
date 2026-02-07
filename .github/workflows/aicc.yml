@@ -12,6 +12,15 @@ jobs:
       matrix:
         profile: [dev, release]
         os: [ubuntu-latest, windows-latest]
+        include:
+          - profile: dev
+            target-dir: debug
+          - profile: release
+            target-dir: release
+          - os: windows-latest
+            extension: .exe
+          - os: ubuntu-latest
+            extension:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -26,4 +35,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: aicc-${{ matrix.profile }}
-        path: target/${{ matrix.profile }}/aicc
+        path: target/${{ matrix.target-dir }}/aicc${{ matrix.extension }}
