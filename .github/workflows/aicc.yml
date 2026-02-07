@@ -22,3 +22,8 @@ jobs:
       run: cargo build --profile ${{ matrix.profile }}
     - name: Test "${{ matrix.profile }}"
       run: cargo test --profile ${{ matrix.profile }}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: aicc-${{ matrix.profile }}
+        path: target/${{ matrix.profile }}/aicc
