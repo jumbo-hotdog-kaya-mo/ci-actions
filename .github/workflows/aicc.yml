@@ -18,8 +18,10 @@ jobs:
           - profile: release
             target-dir: release
           - os: windows-latest
+            osname: windows
             extension: .exe
           - os: ubuntu-latest
+            osname: linux
             extension:
     steps:
     - name: Checkout
@@ -34,5 +36,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: aicc-${{ matrix.profile }}
+        name: aicc-${{ matrix.osname }}-${{ matrix.profile }}
         path: target/${{ matrix.target-dir }}/aicc${{ matrix.extension }}
